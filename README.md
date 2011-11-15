@@ -24,6 +24,13 @@ You will obviously have to put in your key and secret, which you get when you re
 
 Now just follow the README at: https://github.com/intridea/omniauth
 
+## Supported Rubies
+
+OmniAuth Foursquare is tested under 1.8.7, 1.9.2, 1.9.3 and Ruby Enterprise Edition.
+
+[![CI Build
+Status](https://secure.travis-ci.org/arunagw/omniauth-foursquare.png)](http://travis-ci.org/arunagw/omniauth-foursquare)
+
 ## License
 
 Copyright (c) 2011 by Arun Agrawal
