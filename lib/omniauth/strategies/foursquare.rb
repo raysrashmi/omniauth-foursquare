@@ -8,6 +8,19 @@ module OmniAuth
         :authorize_url => '/oauth2/authorize',
         :token_url => '/oauth2/access_token'
       }
+      
+      uid { raw_info['id'] }
+      
+      info do
+        {
+          :first_name => raw_info['firstName'], 
+          :last_name => raw_info['lastName']
+        }
+      end
+      
+      extra do
+        { :raw_info => raw_info }
+      end
 
       def request_phase
         options[:authorize_params] = client_params.merge(options[:authorize_params])
@@ -18,14 +31,7 @@ module OmniAuth
         OmniAuth::Utils.deep_merge(super, client_params.merge({
           :grant_type => 'authorization_code'}))
       end
-
-      info do
-        {
-          :first_name => raw_info['firstName'], 
-          :last_name => raw_info['lastName']
-        }
-      end
-
+      
       def raw_info
         access_token.options[:mode] = :query
         access_token.options[:param_name] = :oauth_token
