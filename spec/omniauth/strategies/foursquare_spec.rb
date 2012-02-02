@@ -31,17 +31,37 @@ describe OmniAuth::Strategies::Foursquare do
 
   describe '#info' do
     before :each do
-      @raw_info ||= { 'firstName' => 'Fred', 'lastName' => 'Smith' }
+      @raw_info = {
+        'name' => 'Sir Fred Smith',
+        'firstName' => 'Fred',
+        'lastName' => 'Smith',
+        'contact' => {
+          'email' => 'fred@example.com'
+        }
+      }
       subject.stub(:raw_info) { @raw_info }
     end
     
     context 'when data is present in raw info' do
+      it 'returns the combined name' do
+        subject.info[:name].should eq('Sir Fred Smith')
+      end
+
       it 'returns the first name' do
         subject.info[:first_name].should eq('Fred')
       end
     
       it 'returns the last name' do
         subject.info[:last_name].should eq('Smith')
+      end
+
+      it 'returns the email' do
+        subject.info[:email].should eq('fred@example.com')
+      end
+
+      it "sets the email blank if contact block is missing in raw_info" do
+        @raw_info.delete('contact')
+        subject.info[:email].should be_nil
       end
     end
   end
