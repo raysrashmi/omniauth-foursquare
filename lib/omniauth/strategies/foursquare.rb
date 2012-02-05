@@ -5,7 +5,7 @@ module OmniAuth
     class Foursquare < OmniAuth::Strategies::OAuth2
       option :client_options, {
         :site => 'https://foursquare.com',
-        :authorize_url => '/oauth2/authorize',
+        :authorize_url => '/oauth2/authenticate',
         :token_url => '/oauth2/access_token'
       }
       
