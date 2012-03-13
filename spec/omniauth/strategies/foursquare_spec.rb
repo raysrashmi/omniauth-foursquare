@@ -37,7 +37,9 @@ describe OmniAuth::Strategies::Foursquare do
         'lastName' => 'Smith',
         'contact' => {
           'email' => 'fred@example.com'
-        }
+        },
+        'photo' => 'https://img-s.foursquare.com/userpix_thumbs/blank_boy.jpg',
+        'homeCity' => 'Chicago'
       }
       subject.stub(:raw_info) { @raw_info }
     end
@@ -62,6 +64,14 @@ describe OmniAuth::Strategies::Foursquare do
       it "sets the email blank if contact block is missing in raw_info" do
         @raw_info.delete('contact')
         subject.info[:email].should be_nil
+      end
+
+      it 'returns the user image' do
+        subject.info[:image].should eq('https://img-s.foursquare.com/userpix_thumbs/blank_boy.jpg')
+      end
+
+      it 'returns the user location' do
+        subject.info[:location].should eq('Chicago')
       end
     end
   end
