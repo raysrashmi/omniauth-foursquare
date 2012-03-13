@@ -21,7 +21,7 @@ describe OmniAuth::Strategies::Foursquare do
     end
 
     it 'has correct authorize url' do
-      subject.client.options[:authorize_url].should eq('/oauth2/authorize')
+      subject.client.options[:authorize_url].should eq('/oauth2/authenticate')
     end
 
     it 'has correct token url' do
