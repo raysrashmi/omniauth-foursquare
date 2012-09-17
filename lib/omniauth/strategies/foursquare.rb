@@ -39,8 +39,7 @@ module OmniAuth
       def raw_info
         access_token.options[:mode] = :query
         access_token.options[:param_name] = :oauth_token
-        response = access_token.get('https://api.foursquare.com/v2/users/self').parsed['response']
-        @raw_info ||= response['user']
+        @raw_info ||= access_token.get('https://api.foursquare.com/v2/users/self').parsed['response']['user']
       end
       
       private
