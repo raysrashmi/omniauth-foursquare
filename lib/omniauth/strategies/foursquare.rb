@@ -8,12 +8,12 @@ module OmniAuth
         :authorize_url => '/oauth2/authenticate',
         :token_url => '/oauth2/access_token'
       }
-      
+
       uid { raw_info['id'] }
-      
+
       info do
         {
-          :first_name => raw_info['firstName'], 
+          :first_name => raw_info['firstName'],
           :last_name  => raw_info['lastName'],
           :name       => raw_info['name'],
           :email      => (raw_info['contact'] || {})['email'],
@@ -21,7 +21,7 @@ module OmniAuth
           :location   => raw_info['homeCity']
         }
       end
-      
+
       extra do
         { :raw_info => raw_info }
       end
@@ -30,20 +30,20 @@ module OmniAuth
         options[:authorize_params] = client_params.merge(options[:authorize_params])
         super
       end
-      
+
       def auth_hash
         OmniAuth::Utils.deep_merge(super, client_params.merge({
           :grant_type => 'authorization_code'}))
       end
-      
+
       def raw_info
         access_token.options[:mode] = :query
         access_token.options[:param_name] = :oauth_token
         @raw_info ||= access_token.get('https://api.foursquare.com/v2/users/self?v=20140128').parsed['response']['user']
       end
-      
+
       private
-      
+
       def client_params
         {:client_id => options[:client_id], :redirect_uri => callback_url ,:response_type => "code"}
       end
