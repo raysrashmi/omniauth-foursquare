@@ -6,7 +6,7 @@ describe OmniAuth::Strategies::Foursquare do
     @request = double('Request')
     @request.stub(:params) { {} }
   end
-  
+
   subject do
     OmniAuth::Strategies::Foursquare.new(nil, @options || {}).tap do |strategy|
       strategy.stub(:request) { @request }
@@ -32,33 +32,38 @@ describe OmniAuth::Strategies::Foursquare do
   describe '#info' do
     before :each do
       @raw_info = {
-        'name' => 'Sir Fred Smith',
         'firstName' => 'Fred',
         'lastName' => 'Smith',
         'contact' => {
-          'email' => 'fred@example.com'
+          'email' => 'fred@example.com',
+          'phone' => '+1 555 555-5555',
         },
         'photo' => 'https://img-s.foursquare.com/userpix_thumbs/blank_boy.jpg',
-        'homeCity' => 'Chicago'
+        'homeCity' => 'Chicago',
+        'bio' => 'I am a guy from Chicago.'
       }
       subject.stub(:raw_info) { @raw_info }
     end
-    
+
     context 'when data is present in raw info' do
       it 'returns the combined name' do
-        subject.info[:name].should eq('Sir Fred Smith')
+        subject.info[:name].should eq('Fred Smith')
       end
 
       it 'returns the first name' do
         subject.info[:first_name].should eq('Fred')
       end
-    
+
       it 'returns the last name' do
         subject.info[:last_name].should eq('Smith')
       end
 
       it 'returns the email' do
         subject.info[:email].should eq('fred@example.com')
+      end
+
+      it 'returns the phone number' do
+        subject.info[:phone].should eq('+1 555 555-5555')
       end
 
       it "sets the email blank if contact block is missing in raw_info" do
@@ -73,9 +78,13 @@ describe OmniAuth::Strategies::Foursquare do
       it 'returns the user location' do
         subject.info[:location].should eq('Chicago')
       end
+
+      it 'returns the user description' do
+        subject.info[:description].should eq('I am a guy from Chicago.')
+      end
     end
   end
-  
+
   describe '#credentials' do
     before :each do
       @access_token = double('OAuth2::AccessToken')
@@ -85,24 +94,24 @@ describe OmniAuth::Strategies::Foursquare do
       @access_token.stub(:refresh_token)
       subject.stub(:access_token) { @access_token }
     end
-    
+
     it 'returns a Hash' do
       subject.credentials.should be_a(Hash)
     end
-    
+
     it 'returns the token' do
       @access_token.stub(:token) { '123' }
       subject.credentials['token'].should eq('123')
     end
-    
+
     it 'returns the expiry status' do
       @access_token.stub(:expires?) { true }
       subject.credentials['expires'].should eq(true)
-      
+
       @access_token.stub(:expires?) { false }
       subject.credentials['expires'].should eq(false)
     end
-    
+
     it 'returns the refresh token and expiry time when expiring' do
       ten_mins_from_now = (Time.now + 360).to_i
       @access_token.stub(:expires?) { true }
@@ -111,14 +120,14 @@ describe OmniAuth::Strategies::Foursquare do
       subject.credentials['refresh_token'].should eq('321')
       subject.credentials['expires_at'].should eq(ten_mins_from_now)
     end
-    
+
     it 'does not return the refresh token when it is nil and expiring' do
       @access_token.stub(:expires?) { true }
       @access_token.stub(:refresh_token) { nil }
       subject.credentials['refresh_token'].should be_nil
       subject.credentials.should_not have_key('refresh_token')
     end
-    
+
     it 'does not return the refresh token when not expiring' do
       @access_token.stub(:expires?) { false }
       @access_token.stub(:refresh_token) { 'XXX' }
