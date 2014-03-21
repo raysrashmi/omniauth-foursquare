@@ -13,12 +13,14 @@ module OmniAuth
 
       info do
         {
-          :first_name => raw_info['firstName'],
-          :last_name  => raw_info['lastName'],
-          :name       => "#{raw_info['firstName']} #{raw_info['lastName']}",
-          :email      => (raw_info['contact'] || {})['email'],
-          :image      => raw_info['photo'],
-          :location   => raw_info['homeCity']
+          :first_name  => raw_info['firstName'],
+          :last_name   => raw_info['lastName'],
+          :name        => "#{raw_info['firstName']} #{raw_info['lastName']}",
+          :email       => (raw_info['contact'] || {})['email'],
+          :phone       => (raw_info['contact'] || {})['phone'],
+          :image       => raw_info['photo'],
+          :location    => raw_info['homeCity'],
+          :description => raw_info['bio']
         }
       end
 
