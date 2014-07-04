@@ -4,3 +4,6 @@ Dir[File.expand_path('../support/**/*', __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
 end
+
+require 'omniauth-foursquare'
+OmniAuth.config.test_mode = true
