@@ -18,7 +18,7 @@ module OmniAuth
           :name        => "#{raw_info['firstName']} #{raw_info['lastName']}",
           :email       => (raw_info['contact'] || {})['email'],
           :phone       => (raw_info['contact'] || {})['phone'],
-          :image       => raw_info['photo'],
+          :image       => "#{[raw_info['photo']['prefix'], raw_info['photo']['suffix']].join}",
           :location    => raw_info['homeCity'],
           :description => raw_info['bio']
         }
