@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'omniauth', '~> 1.0'
   s.add_dependency 'omniauth-oauth2', '~> 1.0'
-  s.add_development_dependency 'rspec', '~> 2.7'
+  s.add_development_dependency 'rspec', '~> 3.3.0'
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'webmock'
