@@ -26,7 +26,7 @@ Now just follow the README at: https://github.com/intridea/omniauth
 
 ## Supported Rubies
 
-OmniAuth Foursquare is tested under 1.8.7, 1.9.2, 1.9.3 and Ruby Enterprise Edition.
+OmniAuth Foursquare is tested under 1.8.7, 1.9.2, 1.9.3, 2.x and Ruby Enterprise Edition.
 
 [![CI Build
 Status](https://secure.travis-ci.org/arunagw/omniauth-foursquare.png)](http://travis-ci.org/arunagw/omniauth-foursquare)
