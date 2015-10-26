@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'omniauth-foursquare'
 
 describe OmniAuth::Strategies::Foursquare do
   before :each do
