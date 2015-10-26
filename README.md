@@ -17,10 +17,10 @@ You can pull them in directly from github e.g.:
 Once these are in, you need to add the following to your `config/initializers/omniauth.rb`:
 
     Rails.application.config.middleware.use OmniAuth::Builder do
-      provider :foursquare, "consumer_key", "consumer_secret" 
+      provider :foursquare, "consumer_key", "consumer_secret"
     end
 
-You will obviously have to put in your key and secret, which you get when you register your app with Foursquare (they call them API Key and Secret Key). 
+You will obviously have to put in your key and secret, which you get when you register your app with Foursquare (they call them API Key and Secret Key).
 
 Now just follow the README at: https://github.com/intridea/omniauth
 
